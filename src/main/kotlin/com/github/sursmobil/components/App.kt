@@ -1,14 +1,17 @@
 package com.github.sursmobil.components
 
 import react.RBuilder
+import react.RComponent
 import react.RProps
 import react.RState
 import react.dom.h1
 
+class App : RComponent<App.Props, App.State>() {
+    interface Props : RProps
+    interface State : RState
 
-interface AppProps : RProps
-interface AppState : RState
+    override fun RBuilder.render() {
+        h1 { +"Hello from React from Kotlin!" }
+    }
 
-fun RBuilder.app() {
-    h1 { +"Hello from React from Kotlin!" }
 }

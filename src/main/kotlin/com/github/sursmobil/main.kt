@@ -26,14 +26,14 @@ fun main(args: Array<String>) {
 }
 
 fun start(state: dynamic): ApplicationBase? {
-    if (document.body?.hasClass("testApp") ?: false) {
+    return if (document.body?.hasClass("testApp") == true) {
         val application = MainApplication()
 
         @Suppress("UnsafeCastFromDynamic")
         application.start(state?.appState ?: emptyMap())
 
-        return application
+        application
     } else {
-        return null
+        null
     }
 }

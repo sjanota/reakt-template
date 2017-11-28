@@ -1,6 +1,6 @@
 package com.github.sursmobil
 
-import com.github.sursmobil.components.app
+import com.github.sursmobil.components.App
 import react.dom.render
 import kotlin.browser.document
 
@@ -12,7 +12,7 @@ class MainApplication : ApplicationBase() {
     override fun start(state: Map<String, Any>) {
         val root = document.getElementById("root")
         render(root) {
-            app()
+            child(App::class) {}
         }
     }
 
