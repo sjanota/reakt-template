@@ -20,9 +20,8 @@ fun Int.rootReducer(action: Action): Int {
 }
 
 class MainApplication : Application<Int>() {
+    override val initState: Int = 0
     lateinit var store: Redux.Store<Int>
-    override val stateKeys: List<String>
-        get() = emptyList()
 
     override fun start(state: Int) {
         val root = document.getElementById("root")
