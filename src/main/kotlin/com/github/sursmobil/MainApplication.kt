@@ -1,6 +1,7 @@
 package com.github.sursmobil
 
 import com.github.sursmobil.components.App
+import com.github.sursmobil.redux.Redux
 import com.github.sursmobil.redux.Redux.createStore
 import react.dom.render
 import kotlin.browser.document
@@ -17,13 +18,14 @@ fun Int.rootReducer(action: Action): Int {
     }
 }
 
-class MainApplication : ApplicationBase() {
+class MainApplication : ApplicationBase<Int>() {
+    lateinit var store: Redux.Store<Int>
     override val stateKeys: List<String>
         get() = emptyList()
 
-    override fun start(state: Map<String, Any>) {
+    override fun start(state: Int) {
         val root = document.getElementById("root")
-        val store = createStore(0, Int::rootReducer)
+        store = createStore(state, Int::rootReducer)
         store.dispatch(Increment(4))
         console.log(store.getState())
         store.dispatch(Decrement(3))
@@ -33,5 +35,5 @@ class MainApplication : ApplicationBase() {
         }
     }
 
-    override fun dispose(): Map<String, Any> = emptyMap()
+    override fun dispose(): Int = store.getState()
 }

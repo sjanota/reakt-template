@@ -4,7 +4,7 @@ import kotlin.browser.document
 import kotlin.dom.hasClass
 
 fun main(args: Array<String>) {
-    var application: ApplicationBase? = null
+    var application: MainApplication? = null
 
     val state: dynamic = module.hot?.let { hot ->
         hot.accept()
@@ -25,12 +25,12 @@ fun main(args: Array<String>) {
     }
 }
 
-fun start(state: dynamic): ApplicationBase? {
+fun start(state: dynamic): MainApplication? {
     return if (document.body?.hasClass("testApp") == true) {
         val application = MainApplication()
 
         @Suppress("UnsafeCastFromDynamic")
-        application.start(state?.appState ?: emptyMap())
+        application.start(state?.appState ?: 0)
 
         application
     } else {

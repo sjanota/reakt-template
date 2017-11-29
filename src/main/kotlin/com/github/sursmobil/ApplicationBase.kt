@@ -1,9 +1,9 @@
 package com.github.sursmobil
 
 
-abstract class ApplicationBase {
+abstract class ApplicationBase<S> {
     abstract val stateKeys: List<String>
 
-    abstract fun start(state: Map<String, Any>)
-    abstract fun dispose(): Map<String, Any>
+    abstract fun start(state: S)
+    abstract fun dispose(): S
 }
