@@ -1,4 +1,4 @@
-package com.github.sursmobil.redux
+package com.github.sursmobil.js.redux
 
 @JsModule("redux")
 external object ReduxNative {

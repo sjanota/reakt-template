@@ -1,8 +1,9 @@
-package com.github.sursmobil
+package com.github.sursmobil.cookhub
 
-import com.github.sursmobil.components.App
-import com.github.sursmobil.redux.Redux
-import com.github.sursmobil.redux.Redux.createStore
+import com.github.sursmobil.cookhub.components.App
+import com.github.sursmobil.js.main.Application
+import com.github.sursmobil.js.redux.Redux
+import com.github.sursmobil.js.redux.Redux.createStore
 import react.dom.render
 import kotlin.browser.document
 
@@ -18,7 +19,7 @@ fun Int.rootReducer(action: Action): Int {
     }
 }
 
-class MainApplication : ApplicationBase<Int>() {
+class MainApplication : Application<Int>() {
     lateinit var store: Redux.Store<Int>
     override val stateKeys: List<String>
         get() = emptyList()

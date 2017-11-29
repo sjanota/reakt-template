@@ -1,4 +1,4 @@
-package com.github.sursmobil
+package com.github.sursmobil.js.main
 
 external val module: Module
 

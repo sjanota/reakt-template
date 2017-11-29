@@ -1,4 +1,4 @@
-package com.github.sursmobil.redux
+package com.github.sursmobil.js.redux
 
 object Redux {
     class Store<S>(

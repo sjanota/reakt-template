@@ -1,7 +1,7 @@
-package com.github.sursmobil
+package com.github.sursmobil.js.main
 
 
-abstract class ApplicationBase<S> {
+abstract class Application<S> {
     abstract val stateKeys: List<String>
 
     abstract fun start(state: S)

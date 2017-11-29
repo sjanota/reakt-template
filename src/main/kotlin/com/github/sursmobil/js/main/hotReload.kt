@@ -1,10 +1,10 @@
-package com.github.sursmobil
+package com.github.sursmobil.js.main
 
 import kotlin.browser.document
 import kotlin.dom.hasClass
 
-fun main(args: Array<String>) {
-    var application: MainApplication? = null
+fun <S> withHotReload(initState: S, appFactory: () -> Application<S>) {
+    var application: Application<S>? = null
 
     val state: dynamic = module.hot?.let { hot ->
         hot.accept()
@@ -18,19 +18,19 @@ fun main(args: Array<String>) {
     }
 
     if (document.body != null) {
-        application = start(state)
+        application = start(initState, state, appFactory)
     } else {
         application = null
-        document.addEventListener("DOMContentLoaded", { application = start(state) })
+        document.addEventListener("DOMContentLoaded", { application = start(initState, state, appFactory) })
     }
 }
 
-fun start(state: dynamic): MainApplication? {
+fun <S> start(initState: S, state: dynamic, appFactory: () -> Application<S>): Application<S>? {
     return if (document.body?.hasClass("testApp") == true) {
-        val application = MainApplication()
+        val application = appFactory()
 
         @Suppress("UnsafeCastFromDynamic")
-        application.start(state?.appState ?: 0)
+        application.start(state?.appState ?: initState)
 
         application
     } else {

@@ -1,4 +1,4 @@
-package com.github.sursmobil.components
+package com.github.sursmobil.cookhub.components
 
 import react.RBuilder
 import react.RComponent
