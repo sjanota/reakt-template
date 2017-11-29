@@ -30,6 +30,10 @@ class MainApplication : Application<Int>() {
         console.log(store.getState())
         store.dispatch(Decrement(3))
         console.log(store.getState())
+        val a = Increment(3)
+        a.asDynamic()["n"] = 5
+        store.dispatch(a)
+        console.log(store.getState())
         render(root) {
             child(App::class) {}
         }
