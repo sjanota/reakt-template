@@ -1,7 +1,7 @@
 package com.github.sursmobil.js.redux
 
 object Redux {
-    class Store<S>(
+    class Store<out S>(
         private val native: ReduxNative.Store<S>
     ) : ReduxNative.Store<S> by native {
         override fun dispatch(action: Any) {
@@ -13,16 +13,11 @@ object Redux {
     }
 
     fun <S, A> createStore(init: S, reducer: S.(A) -> S): Redux.Store<S> {
-        val wrapper = { s: S?, a: dynamic ->
-            val state = s ?: init
+        val wrapper = { state: S, a: dynamic ->
             val origin = a["action"].unsafeCast<A>()
-            if (origin == null) {
-                state
-            } else {
-                state.reducer(origin)
-            }
+            state.reducer(origin)
         }
-        val native = ReduxNative.createStore(wrapper)
+        val native = ReduxNative.createStore(wrapper, init)
         return Store(native)
     }
 }

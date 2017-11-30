@@ -18,17 +18,17 @@ data class State(
 )
 
 fun State.rootReducer(action: Action): State = State(
-    n = n.reducer(action),
-    s = s.reducer(action)
+    n = n.nReducer(action),
+    s = s.sReducer(action)
 )
 
-fun Int.reducer(action: Action) = when(action) {
+fun Int.nReducer(action: Action) = when(action) {
     is Increment -> this + action.n
     is Decrement -> this - action.n
     else -> this
 }
 
-fun String.reducer(action: Action) = when(action) {
+fun String.sReducer(action: Action) = when(action) {
     is SetString -> action.s
     else -> this
 }
