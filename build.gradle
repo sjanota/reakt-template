@@ -45,6 +45,7 @@ kotlinFrontend {
         dependency("react")
         dependency("react-dom")
         dependency("redux")
+        dependency("redux-thunk")
         dependency "style-loader" // production dependency
 
         devDependency "karma"     // development dependency

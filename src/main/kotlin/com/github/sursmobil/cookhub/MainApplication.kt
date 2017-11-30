@@ -2,8 +2,8 @@ package com.github.sursmobil.cookhub
 
 import com.github.sursmobil.cookhub.components.App
 import com.github.sursmobil.js.main.Application
-import com.github.sursmobil.js.redux.Redux
-import com.github.sursmobil.js.redux.Redux.createStore
+import com.github.sursmobil.js.redux.*
+import com.github.sursmobil.js.redux.ReduxNative.Store
 import react.dom.render
 import kotlin.browser.document
 
@@ -35,22 +35,21 @@ fun String.sReducer(action: Action) = when(action) {
 
 class MainApplication : Application<State>() {
     override val initState: State = State(0, "")
-    lateinit var store: Redux.Store<State>
+    lateinit var store: Store<State>
 
     override fun start(state: State) {
         val root = document.getElementById("root")
-        store = createStore(state, State::rootReducer)
+        store = createStore(state, State::rootReducer, listOf(
+            logger<State>(),
+            thunkMiddleware
+        ))
 
         store.dispatch(Increment(4))
-        console.log(store.getState(), "aaa")
-
         store.dispatch(Decrement(3))
-        console.log(store.getState())
-
-        val a = Increment(3)
-        a.asDynamic()["n"] = 5
-        store.dispatch(a)
-        console.log(store.getState())
+        store.dispatch(thunk<State> {
+            dispatch(Increment(3))
+            dispatch(SetString("Test redux-thunk"))
+        })
 
         render(root) {
             child(App::class) {}
