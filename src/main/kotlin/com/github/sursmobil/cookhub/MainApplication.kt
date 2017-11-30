@@ -10,34 +10,52 @@ import kotlin.browser.document
 sealed class Action
 data class Increment(val n: Int): Action()
 data class Decrement(val n: Int): Action()
+data class SetString(val s: String): Action()
 
-fun Int.rootReducer(action: Action): Int {
-    console.log(action)
-    return when(action) {
-        is Increment -> this + action.n
-        is Decrement -> this - action.n
-    }
+data class State(
+    val n: Int,
+    val s: String
+)
+
+fun State.rootReducer(action: Action): State = State(
+    n = n.reducer(action),
+    s = s.reducer(action)
+)
+
+fun Int.reducer(action: Action) = when(action) {
+    is Increment -> this + action.n
+    is Decrement -> this - action.n
+    else -> this
 }
 
-class MainApplication : Application<Int>() {
-    override val initState: Int = 0
-    lateinit var store: Redux.Store<Int>
+fun String.reducer(action: Action) = when(action) {
+    is SetString -> action.s
+    else -> this
+}
 
-    override fun start(state: Int) {
+class MainApplication : Application<State>() {
+    override val initState: State = State(0, "")
+    lateinit var store: Redux.Store<State>
+
+    override fun start(state: State) {
         val root = document.getElementById("root")
-        store = createStore(state, Int::rootReducer)
+        store = createStore(state, State::rootReducer)
+
         store.dispatch(Increment(4))
-        console.log(store.getState())
+        console.log(store.getState(), "aaa")
+
         store.dispatch(Decrement(3))
         console.log(store.getState())
+
         val a = Increment(3)
         a.asDynamic()["n"] = 5
         store.dispatch(a)
         console.log(store.getState())
+
         render(root) {
             child(App::class) {}
         }
     }
 
-    override fun dispose(): Int = store.getState()
+    override fun dispose(): State = store.getState()
 }
