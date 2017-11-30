@@ -8,4 +8,6 @@ external object ReduxNative {
         fun getState(): S
         fun dispatch(action: dynamic)
     }
+
+    fun applyMiddleware(middleware: dynamic): dynamic
 }
