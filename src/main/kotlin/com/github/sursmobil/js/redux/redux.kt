@@ -12,10 +12,14 @@ object Redux {
         }
     }
 
-    fun <S, A> createStore(init: S, reducer: S.(A) -> S): Redux.Store<S> {
+    fun <S, A> createStore(init: S, reducer: S.(A) -> S, middleWares: List<dynamic> = emptyList()): Redux.Store<S> {
         val wrapper = { state: S, a: dynamic ->
-            val origin = a["action"].unsafeCast<A>()
-            state.reducer(origin)
+            if (a["action"] is A) {
+                val origin = a["action"].unsafeCast<A>()
+                state.reducer(origin)
+            } else {
+                throw Exception("Unsupported action $a")
+            }
         }
         val native = ReduxNative.createStore(wrapper, init)
         return Store(native)
